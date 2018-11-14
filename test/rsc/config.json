@@ -1,0 +1,15 @@
+{"api_maj":0,"api_min":11,"dts":0,"dev":{"dev_id":"00000000000000000000000000000000",
+  "dev_cfg":{"heartbeat":10},"chans":[
+    {"ch_idx":0,"ch_cfg":{"ch_type":1,"en":1,"sched":1,"sensor":{"settling_time":1.00}}},
+    {"ch_idx":1,"ch_cfg":{"ch_type":1,"en":1,"sched":1,"sensor":{"settling_time":1.00}}},
+    {"ch_idx":2,"ch_cfg":{"ch_type":1,"en":1,"sched":1,"sensor":{"settling_time":1.00}}},
+    {"ch_idx":3,"ch_cfg":{"ch_type":1,"en":1,"sched":1,"sensor":{"settling_time":1.00}}},
+    {"ch_idx":4,"ch_cfg":{"ch_type":1,"en":1,"sched":1,"sensor":{"settling_time":1.00}}},
+    {"ch_idx":5,"ch_cfg":{"ch_type":1,"en":1,"sched":1,"sensor":{"settling_time":1.00}}},
+    {"ch_idx":6,"ch_cfg":{"ch_type":1,"en":1,"sched":1,"sensor":{"settling_time":1.00}}},
+    {"ch_idx":7,"ch_cfg":{"ch_type":1,"en":1,"sched":1,"sensor":{"settling_time":1.00}}},
+    {"ch_idx":8,"ch_cfg":{"ch_type":256,"en":1,"sched":1,"sensor":{"sens_flags":4097}}},
+    {"ch_idx":9,"ch_cfg":{"ch_type":256,"en":1,"sched":1,"sensor":{"sens_flags":4097}}},
+    {"ch_idx":10,"ch_cfg":{"ch_type":256,"en":1,"sched":1,"sensor":{"sens_flags":4097}}},
+    {"ch_idx":11,"ch_cfg":{"ch_type":256,"en":1,"sched":1,"sensor":{"sens_flags":4097}}}
+  ]}}
