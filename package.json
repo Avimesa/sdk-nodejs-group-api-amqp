@@ -1,0 +1,24 @@
+{
+  "name": "avmsa-group-api-amqp",
+  "version": "0.0.1",
+  "description": "SDK for the Avimesa Group API using AMQP (0-9-1)",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Avimesa/sdk-nodejs-group-api-amqp.git"
+  },
+  "author": "travimesa",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Avimesa/sdk-nodejs-group-api-amqp/issues"
+  },
+  "homepage": "https://github.com/Avimesa/sdk-nodejs-group-api-amqp#readme",
+  "dependencies": {
+    "amqplib": "^0.5.2",
+    "dotenv": "^6.1.0",
+    "mocha": "^5.2.0"
+  }
+}

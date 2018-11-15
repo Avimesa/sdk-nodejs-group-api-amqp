@@ -1,6 +1,9 @@
 var assert = require('assert');
 var api = require('../group-api-amqp');
 
+/*
+ * Commented out until I figure out a cleaner way (e.g. a test vhost)
+ *
 describe('api', function() {
 	// some commands take longer than default 2sec
 	this.timeout(20000);
@@ -38,3 +41,4 @@ describe('api', function() {
 		});
 	});
 });
+*/
