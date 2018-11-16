@@ -1,6 +1,6 @@
 {
-  "name": "avmsa-group-api-amqp",
-  "version": "0.0.2",
+  "name": "@avimesa/group-api-amqp",
+  "version": "0.0.1",
   "description": "SDK for the Avimesa Group API using AMQP (0-9-1)",
   "main": "index.js",
   "scripts": {
