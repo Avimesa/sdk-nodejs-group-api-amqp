@@ -57,7 +57,7 @@ NODE_TLS_REJECT_UNAUTHORIZED=0
 Load the package:
 ```
 ...
-const api = require('@avimesda/group-api-amqp');
+const api = require('@avimesa/group-api-amqp');
 ...
 ```
 
