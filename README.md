@@ -149,7 +149,7 @@ Parameters:
 The callback signature contains:
 
 - `err` (boolean) - true if error, false otherwise
-- `msg` (string) - the 128bit authentication key (32 characters, a-f0-9)
+- `msg` (string) - error message if there's an error
 
 
 
