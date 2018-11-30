@@ -1,6 +1,7 @@
 var assert = require('assert');
 var path = require('path');
 var process = require('process');
+var fs = require('fs');
 var api = require('../lib/models');
 
 describe('models', function() {
@@ -44,7 +45,9 @@ describe('models', function() {
 		it('should return a cmd1008', function() {
 			const devId = '00000000000000000000000000000000';
 			const filePath = path.resolve(__dirname, 'rsc/script.js');
-			const cmd = api.cmd1008(devId, filePath);
+			const file = fs.readFileSync(filePath, 'utf8');
+			let fileBuf = new Buffer(file);
+			const cmd = api.cmd1008(devId, fileBuf);
 			assert.equal(cmd.cmd_id, 1008);
 			assert.notEqual(cmd.req_id, 0);
 			assert.equal(cmd.dev_id, devId);
@@ -56,7 +59,9 @@ describe('models', function() {
 		it('should return a cmd1010', function() {
 			const devId = '00000000000000000000000000000000';
 			const filePath = path.resolve(__dirname, 'rsc/config.json');
-			const cmd = api.cmd1010(devId, filePath);
+			const file = fs.readFileSync(filePath, 'utf8');
+			let fileBuf = new Buffer(file);
+			const cmd = api.cmd1010(devId, fileBuf);
 			assert.equal(cmd.cmd_id, 1010);
 			assert.notEqual(cmd.req_id, 0);
 			assert.equal(cmd.dev_id, devId);
@@ -88,7 +93,9 @@ describe('models', function() {
 		it('should return a cmd1020', function() {
 			const devId = '00000000000000000000000000000000';
 			const filePath = path.resolve(__dirname, 'rsc/fw-app.dat');
-			const cmd = api.cmd1020(devId, filePath);
+			const file = fs.readFileSync(filePath, 'utf8');
+			let fileBuf = new Buffer(file);
+			const cmd = api.cmd1020(devId, fileBuf);
 			assert.equal(cmd.cmd_id, 1020);
 			assert.notEqual(cmd.req_id, 0);
 			assert.equal(cmd.dev_id, devId);

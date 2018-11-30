@@ -216,7 +216,7 @@ The callback signature contains:
 ##### Callback
 
 ```
-uploadScript(devId, path, function(err, msg){ ... })
+uploadScript(devId, fileBuf, function(err, msg){ ... })
 ```
 
 Upload a Device Driver Script for the given Device ID
@@ -224,7 +224,7 @@ Upload a Device Driver Script for the given Device ID
 Parameters:
 
 - `devId` (string) - Device name.  Lower case, 32 characters, a-f0-9.
-- `path` (string) - File path for the script
+- `fileBuf` (Buffer) - Buffer holding the script file
 
 The callback signature contains:
 
@@ -239,7 +239,7 @@ The callback signature contains:
 ##### Callback
 
 ```
-uploadConfig(devId, path, function(err, message){ ... })
+uploadConfig(devId, fileBuf, function(err, message){ ... })
 ```
 
 Upload a Device Configuration for the given Device ID
@@ -247,7 +247,7 @@ Upload a Device Configuration for the given Device ID
 Parameters:
 
 - `devId` (string) - Device name.  Lower case, 32 characters, a-f0-9.
-- `path` (string) - File path for the script file (JavaScript)
+- `fileBuf` (Buffer) - Buffer holding the config file (JSON, DialTone Protocol)
 
 The callback signature contains:
 
@@ -263,7 +263,7 @@ The callback signature contains:
 ##### Callback
 
 ```
-uploadDfuPackage(devId, path, function(err, message){ ... })
+uploadDfuPackage(devId, fileBuf, function(err, message){ ... })
 ```
 
 Upload a Device Firmware Update (DFU) Package for the given Device ID
@@ -271,7 +271,7 @@ Upload a Device Firmware Update (DFU) Package for the given Device ID
 Parameters:
 
 - `devId` (string) - Device name.  Lower case, 32 characters, a-f0-9.
-- `path` (string) - File path for the config file (JSON, DialTone Protocol)
+- `fileBuf` (Buffer) - Buffer type holding the Avimesa DFU Package
 
 The callback signature contains:
 
