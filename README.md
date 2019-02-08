@@ -49,9 +49,6 @@ RMQ_GROUP_ID= ** TODO **
 
 # RMQ Authentication Key
 RMQ_AUTH_KEY= ** TODO **
-
-# Set this to 0 to allow certless TLS
-NODE_TLS_REJECT_UNAUTHORIZED=0
 ```
 
 Load the package:
