@@ -9,6 +9,8 @@ This project the source code for the **@avimesa/group-api-amqp** npm package.  T
 ## Table of Contents
 - [1. Quick Start](#1.-quick-start)
 - [2. API Reference](#2.-api-reference)
+    - Connection Settings
+        - [setConnParams](#2.0-api-reference)
     - Group Level
         - [listDevices](#2.1-api-reference)
         - [addDevice](#2.2-api-reference)
@@ -36,7 +38,7 @@ Install the package:
 npm install @avimesa/group-api-amqp
 ```
 
-Update or add your .env file in the project root:
+Use the `setConnParams` function, or update or add your .env file in the project root:
 ```
 # RMQ Server Hostname
 RMQ_HOSTNAME=rmqserv001.avimesa.com
@@ -45,23 +47,23 @@ RMQ_HOSTNAME=rmqserv001.avimesa.com
 RMQ_PORT=5671
 
 # RMQ Group ID / Vhost
-RMQ_GROUP_ID= ** TODO **
+RMQ_GROUP_ID= <** ENTER API Key **>
 
 # RMQ Authentication Key
-RMQ_AUTH_KEY= ** TODO **
+RMQ_AUTH_KEY= <** ENTER API Password **>,
 ```
 
 Load the package:
 ```
 ...
-const api = require('@avimesa/group-api-amqp');
+const groupApi = require('@avimesa/group-api-amqp');
 ...
 ```
 
 Use API per documentation, for example, listing Devices for the Group:
 
 ```
-api.listDevices(function(err, devices){
+groupApi.listDevices(function(err, devices){
 	if(!err){
 		for (var i = 0; i < devices.length; i++){
 			console.log(devices[i]);
@@ -74,16 +76,39 @@ api.listDevices(function(err, devices){
 <a id="2.-api-reference"></a>
 ## 2. API Reference
 
+
+<a id="2.0-api-reference"></a>
+### setConnParams
+
+##### Summary
+
+Set the connection parameters for the AMQP connection
+
+```
+const groupApi = require('@avimesa/group-api-amqp');
+
+groupApi.setConnParams({
+    hostname: 'rmqserv001.avimesa.com',
+    username: <** ENTER API Key **>,
+    password: <** ENTER API Password **>,
+    vhost: <** ENTER API Key **>,
+    port: 5671
+});
+```
+
+
 <a id="2.1-api-reference"></a>
 ### listDevices
+
+##### Summary
+
+Lists the devices for the Group
 
 ##### Callback
 
 ```
-listDevices(function(err, devices){ ... })
+groupApi.listDevices(function(err, devices){ ... })
 ```
-
-Lists the devices for the Group (which is specified in credentials in the .env file)
 
 Parameters:
 
@@ -92,6 +117,12 @@ The callback signature contains:
 - `err` (boolean) - true if error, false otherwise
 - `devices` (array) - array of device IDs in string form
 
+##### Async
+
+```
+let response = await groupApi.listDevicesAsync();
+```
+
 
 
 
@@ -99,13 +130,15 @@ The callback signature contains:
 <a id="2.2-api-reference"></a>
 ### addDevice
 
+##### Summary
+
+Adds a Device to the Group.  If successful, a generated Authentication Key is provided in the response.    
+
 ##### Callback
 
 ```
-addDevice(devId, function(err, authKey){ ... })
+groupApi.addDevice(devId, function(err, authKey){ ... })
 ```
-
-Adds a Device to the Group.  If successful, a generated Authentication Key is provided in the response.    
 
 Parameters:
 
@@ -121,6 +154,11 @@ Notes:
 
 - Use the `validDeviceId` utility function
 
+##### Async
+
+```
+let response = await groupApi.addDeviceAsync(devId);
+```
 
 
 
@@ -128,15 +166,17 @@ Notes:
 <a id="2.3-api-reference"></a>
 ### removeDevice
 
-##### Callback
-
-```
-removeDevice(devId, function(err, msg){ ... })
-```
+##### Summary
 
 Removes a Device from the Group.  Any files or data cached for this device in the Avimesa Device Cloud will be removed and trashed.
 
-- **This may result in disabling a device in the field.  Proceed with caution only if you know what you're doing!**
+**WARNING: This may result in disabling a device in the field.  Proceed with caution only if you know what you're doing!**
+
+##### Callback
+
+```
+groupApi.removeDevice(devId, function(err, msg){ ... })
+```
 
 Parameters:
 
@@ -148,21 +188,30 @@ The callback signature contains:
 - `err` (boolean) - true if error, false otherwise
 - `msg` (string) - error message if there's an error
 
+##### Async
+
+```
+let response = await groupApi.removeDeviceAsync(devId);
+```
+
 
 
 [Top](#toc)<br>
 <a id="2.4-api-reference"></a>
 ### actuate
 
+##### Summary
+
+Sends an actuation command to the devices actuation queue.
+
+**WARNING: You that you are responsible for checking the response in the data stream as the communication with the device is asynchronous (e.g. the device might be sleeping)**
+
+
 ##### Callback
 
 ```
-actuate(devId, cmd, function(err, msg){ ... })
+groupApi.actuate(devId, cmd, function(err, msg){ ... })
 ```
-
-Removes a Device from the Group.  Any files or data cached for this device in the Avimesa Device Cloud will be removed and trashed.
-
-**Note that you are responsible for checking the response in the data stream as the communication with the device is asynchronous (e.g. the device might be sleeping)**
 
 Parameters:
 
@@ -175,18 +224,26 @@ The callback signature contains:
 - `err` (boolean) - true if error, false otherwise
 - `msg` (string) - status for errors if any
 
+##### Async
+
+```
+let response = await groupApi.actuateAsync(devId, cmd);
+```
+
 
 [Top](#toc)<br>
 <a id="2.5-api-reference"></a>
 ### listFiles
 
+##### Summary
+
+List the files for the given Device ID.
+
 ##### Callback
 
 ```
-listFiles(devId, function(err, files){ ... })
+groupApi.listFiles(devId, function(err, files){ ... })
 ```
-
-List the files for the given Device ID.
 
 Parameters:
 
@@ -205,18 +262,28 @@ The callback signature contains:
 }
 ```
 
+##### Async
+
+```
+let response = await groupApi.listFilesAsync(devId);
+```
+
+
+
 
 [Top](#toc)<br>
 <a id="2.6-api-reference"></a>
 ### uploadScript
 
+##### Summary
+
+Upload a Device Driver Script for the given Device ID.  The script is checked for potential errors upon upload, but not all runtime errors can be accounted for.  If a runtime error occurs, it will show up in the `syslog` queue.
+
 ##### Callback
 
 ```
-uploadScript(devId, fileBuf, function(err, msg){ ... })
+groupApi.uploadScript(devId, fileBuf, function(err, msg){ ... })
 ```
-
-Upload a Device Driver Script for the given Device ID
 
 Parameters:
 
@@ -228,18 +295,29 @@ The callback signature contains:
 - `err` (boolean) - true if error, false otherwise
 - `msg` (string) - error message. if any
 
+##### Async
+
+```
+let response = await groupApi.uploadScriptAsync(devId, fileBuf);
+```
+
+
 
 [Top](#toc)<br>
 <a id="2.7-api-reference"></a>
 ### uploadConfig
 
+##### Summary
+
+Upload a Device Configuration for the given Device ID.  It will be checked for potential issues upon upload.
+
+**WARNING: the max configuration file size is 2048 bytes**
+
 ##### Callback
 
 ```
-uploadConfig(devId, fileBuf, function(err, message){ ... })
+groupApi.uploadConfig(devId, fileBuf, function(err, message){ ... })
 ```
-
-Upload a Device Configuration for the given Device ID
 
 Parameters:
 
@@ -251,19 +329,32 @@ The callback signature contains:
 - `err` (boolean) - true if error, false otherwise
 - `msg` (string) - error message. if any
 
+##### Async
+
+```
+let response = await groupApi.uploadConfigAsync(devId, fileBuf);
+```
+
+
 
 
 [Top](#toc)<br>
 <a id="2.8-api-reference"></a>
 ### uploadDfuPackage
 
+##### Summary
+
+Upload a Device Firmware Update (DFU) Package for the given Device ID
+
+Notes:
+
+- This API uploads the package.  You need to `actuate` the device to begin the update process.  See [here](#https://github.com/Avimesa/user-guide-group-api-amqp#4.10-group-api) for details.
+
 ##### Callback
 
 ```
-uploadDfuPackage(devId, fileBuf, function(err, message){ ... })
+groupApi.uploadDfuPackage(devId, fileBuf, function(err, message){ ... })
 ```
-
-Upload a Device Firmware Update (DFU) Package for the given Device ID
 
 Parameters:
 
@@ -275,22 +366,30 @@ The callback signature contains:
 - `err` (boolean) - true if error, false otherwise
 - `msg` (string) - error message. if any
 
-Notes:
+##### Async
 
-- This API uploads the package.  You need to `actuate` the device to begin the update process.  See [here](#https://github.com/Avimesa/user-guide-group-api-amqp#4.10-group-api) for details.
+```
+let response = await groupApi.uploadDfuPackageAsync(devId, fileBuf);
+```
+
+
 
 
 [Top](#toc)<br>
 <a id="2.9-api-reference"></a>
 ### updateAuthKey
 
+##### Summary
+
+Update a Device's Authentication key for the given Device ID
+
+**WARNING: This may result in disabling a device in the field.  Proceed with caution only if you know what you're doing!**
+
 ##### Callback
 
 ```
-updateAuthKey(devId, function(err, authKey){ ... })
+groupApi.updateAuthKey(devId, function(err, authKey){ ... })
 ```
-
-Update a Device's Authentication key for the given Device ID
 
 Parameters:
 
@@ -301,24 +400,32 @@ The callback signature contains:
 - `err` (boolean) - true if error, false otherwise
 - `authKey` (string) - the 128bit authentication key (32 characters, a-f0-9)
 
-Notes:
+##### Async
 
-- **This may result in disabling a device in the field.  Proceed with caution only if you know what you're doing!**
+```
+let response = await groupApi.updateAuthKeyAsync(devId);
+```
+
+
 
 
 [Top](#toc)<br>
 <a id="2.10-api-reference"></a>
 ### consume
 
-##### Callback
-
-```
-consume(queue, function(err, msg, ack){ ... })
-```
+##### Summary
 
 Begins consuming data from the given queue and will obtain all pending messages that are in the queue upon connection.  
 
 A callback is used on each message read that provides the ability to prevent an ACK (for a use case of, say, the database isn't available for storage)
+
+**WARNING: This results in an exclusive connection to the queue and other clients are blocked from using this queue (as intended)**
+
+##### Callback
+
+```
+groupApi.consume(queue, function(err, msg, ack){ ... })
+```
 
 Parameters:
 
@@ -330,37 +437,39 @@ The callback signature contains:
 - `msg` (string) - the message from the queue
 - `ack` (function) - a callback with signature `function(boolean)`
 
-Notes:
 
-- **This results in an exclusive connection to the queue and other clients are blocked from using this queue (as intended)**
 
 
 [Top](#toc)<br>
 <a id="2.11-api-reference"></a>
 ### listen
 
-##### Callback
-
-```
-listen(exchange, key, function(err, msg){ ... })
-```
-
+##### Summary
 
 Begins listening for data from the given exchange and routing key.  A temporary queue is created and used, so there will be no prior messages as this is a new queue.  
 
 A callback is used on each message read, and the messages are automatically acknowledged.
-s
+
+##### Callback
+
+```
+groupApi.listen(exchange, key, function(err, msg){ ... })
+```
+
+
 
 [Top](#toc)<br>
 <a id="2.12-api-reference"></a>
 ### count
 
-##### Callback
+##### Summary
 
 Gets the message count of the given queue by name.
 
+##### Callback
+
 ```
-count(queue, function(err, count){ ... })
+groupApi.count(queue, function(err, count){ ... })
 ```
 
 Parameters:
@@ -372,21 +481,30 @@ The callback signature contains:
 - `err` (boolean) - true if error, false otherwise
 - `count` (number) - the number of messages that are in the queue
 
+##### Async
+
+```
+let response = await groupApi.countAsync(queue);
+```
+
 
 
 [Top](#toc)<br>
 <a id="2.13-api-reference"></a>
 ### purge
 
-##### Callback
-
-```
-purge(queue, function(err, count){ ... })
-```
+##### Summary
 
 Purges the given queue by name and gives the number of messages removed.  
 
 **NOTE THIS MAY RESULT IN DATA LOSS.  MAKE SURE YOU KNOW WHAT YOU ARE PURGING!**.
+
+
+##### Callback
+
+```
+groupApi.purge(queue, function(err, count){ ... })
+```
 
 Parameters:
 
@@ -400,6 +518,12 @@ The callback signature contains:
 Notes:
 
 - If an exclusive connection is already connected this command would fail.
+
+##### Async
+
+```
+let response = await groupApi.purgeAsync(queue);
+```
 
 
 [Top](#toc)<br>
