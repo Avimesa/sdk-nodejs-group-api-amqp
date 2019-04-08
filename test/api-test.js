@@ -1,5 +1,4 @@
 var assert = require('assert');
-var api = require('../group-api-amqp');
 
 /*
  * Commented out until I figure out a cleaner way (e.g. a test vhost)

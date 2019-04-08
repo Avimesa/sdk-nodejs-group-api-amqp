@@ -38,20 +38,33 @@ Install the package:
 npm install @avimesa/group-api-amqp
 ```
 
-Use the `setConnParams` function, or update or add your .env file in the project root:
+Configure your API credentials using the following options:
+
+### 1.1 Set Credentials using setConnParams
+
+Use the `setConnParams` function before accessing the API:
+
 ```
-# RMQ Server Hostname
-RMQ_HOSTNAME=rmqserv001.avimesa.com
+const groupApi = require('@avimesa/group-api-amqp');
 
-# RMQ Server Port
-RMQ_PORT=5671
-
-# RMQ Group ID / Vhost
-RMQ_GROUP_ID= <** ENTER API Key **>
-
-# RMQ Authentication Key
-RMQ_AUTH_KEY= <** ENTER API Password **>,
+groupApi.setConnParams({
+    apiKey: '<** Enter API Key **>',
+    apiPassword: '<** Enter API Password **>',
+});
 ```
+
+### 1.2 Load Credentials using .env file
+
+update or add your .env file in the project root:
+```
+# API Key
+API_KEY= <** Enter API Key **>
+
+# API Password
+API_PASSWORD= <** Enter API Password **>,
+```
+
+### 1.3 Use the API
 
 Load the package:
 ```
@@ -88,11 +101,20 @@ Set the connection parameters for the AMQP connection
 const groupApi = require('@avimesa/group-api-amqp');
 
 groupApi.setConnParams({
+    apiKey: '<** Enter API Key **>',
+    apiPassword: '<** Enter API Password **>',
+});
+```
+
+Note, you can override connection paramaters as well:
+
+```
+groupApi.setConnParams({
+    apiKey: '<** Enter API Key **>',
+    apiPassword: '<** Enter API Password **>',
     hostname: 'rmqserv001.avimesa.com',
-    username: <** ENTER API Key **>,
-    password: <** ENTER API Password **>,
-    vhost: <** ENTER API Key **>,
     port: 5671
+    vhost: '<** By default, same as the API Key **>',
 });
 ```
 
