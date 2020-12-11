@@ -10,7 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/Avimesa/sdk-nodejs-group-api-amqp.git"
   },
-  "author": "travimesa",
+  "author": "kulrathknight",
   "license": "SEE LICENSE IN LICENSE",
   "bugs": {
     "url": "https://github.com/Avimesa/sdk-nodejs-group-api-amqp/issues"
